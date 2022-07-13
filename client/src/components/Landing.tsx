@@ -14,7 +14,7 @@ const Landing = () => {
       <div className='flex flex-col items-center justify-between overflow-y-hidden w-full h-screen relative lg:w-7/12 xl:w-9/12 bg-primary bg-landingImg bg-center '>
         <Navbar />
         <Icons classes='text-white flex-col absolute bottom-4 right-4' />
-        <img className='object-scale-down w-[30vw]' src={dogImg} alt='' />
+        <img className='object-scale-down min-w-fit h-[40vh] sm:h-[50vh] lg:h-[60vh] xl:h-[70vh]' src={dogImg} alt='' />
       </div>
       <div className='w- relative lg:w-5/12 xl:3/12 flex flex-col items-center min-h-[600px] md:min-h-full p-5 md:p-10'>
         <div className='flex w-full justify-end [&>*:hover]:opacity-60 [&>*]:cursor-pointer transition-all self-start gap-4 text-xl sm:text-2xl lg:text-3xl'>
@@ -40,7 +40,7 @@ const Landing = () => {
             I&apos;m looking for a nice cozy place to call home.
           </h2>
           <Button classes='max-w-[200px]' theme='filled' text='Adopt Me' />
-          <button className='absolute right-10 bg-white text-primary border-2 border-primary hover:scale-105 hover:shadow-lg transition-all rounded-[50%] p-2'>
+          <button className='absolute text-sm sm:text-base lg:text-xl right-10 bg-white text-primary border-2 border-primary hover:scale-105 hover:shadow-lg transition-all rounded-[50%] p-1 sm:p-2'>
             <ArrowForwardIosIcon />
           </button>
         </div>

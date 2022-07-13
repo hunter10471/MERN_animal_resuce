@@ -5,8 +5,9 @@ const petSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    ownerName:{
-        type:String,
+    ownerId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
         required:true
     },
     age:{
@@ -16,6 +17,11 @@ const petSchema = new mongoose.Schema({
     type:{
         type:String,
         required:true
+    },
+    gender:{
+        type:String,
+        enum: ['male','female'],
+        default:'male'
     },
     breed:{
         type:String,
