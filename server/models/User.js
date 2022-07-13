@@ -12,12 +12,12 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    unique: [true, 'Username is already in use.'],
   },
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: [true, 'Email is already in use.'],
   },
   avatar:{
     type:String,
@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
     default: null,
   },
   isAdmin: {
+    type:Boolean,
     required: true,
     default: false,
   },
@@ -45,7 +46,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save',async function(next){
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password,salt);
-  
+
 });
 
 

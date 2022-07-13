@@ -38,7 +38,10 @@ const petSchema = new mongoose.Schema({
     },
     previousOwners:[
         {
-            ownerId:String,
+            ownerId:{
+                type: mongoose.Schema.Types.ObjectId,
+                ref:'User'
+            }
         }
     ],
     description:{
