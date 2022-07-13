@@ -1,10 +1,14 @@
 import React from 'react';
+import Landing from '../components/Landing';
+import PetsContainer from '../components/PetsContainer';
 
-type Props = {name?:string};
 
-const Home = (props: Props) => {
+const Home = () => {
   return (
-    <div className=' ' >Home</div>
+    <>
+      <Landing/>
+      <PetsContainer/>
+    </>
   );
 };
 

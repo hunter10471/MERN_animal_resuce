@@ -4,7 +4,7 @@ interface IButtonProps {
     theme: 'filled' | 'outlined';
     text: string;
     icon?: any;
-    onClick?(): any;
+    onClick?(e?:any): any;
     classes?: string;
 }
 

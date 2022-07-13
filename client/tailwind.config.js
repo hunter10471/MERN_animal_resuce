@@ -10,10 +10,12 @@ module.exports = { //eslint-disable-line
       colors:{
         primary:'#EF6F6F',
         secondary:'#2D2D2D',
-        tertiary:'#EDFDBA'
+        tertiary:'#EDFD8A'
       },
       backgroundImage:{
-        'registerImg':"url('/src/assets/images/registerImg.jpg')"   //eslint-disable-line
+        'registerImg':"url('/src/assets/images/registerImg.jpg')" ,  //eslint-disable-line
+        'loginImg':"url('/src/assets/images/loginImg.jpg')",  //eslint-disable-line
+        'landingImg':"url('/src/assets/images/landing.png')"   //eslint-disable-line
       }
     },
   },
