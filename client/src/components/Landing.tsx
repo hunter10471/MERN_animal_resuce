@@ -9,6 +9,7 @@ import Button from './Button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Logo from './Logo';
 
+
 const Landing = () => {
   return (
     <div className='flex w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
@@ -18,7 +19,7 @@ const Landing = () => {
           <Logo />
         </span>
         <Icons classes='text-white flex-col absolute bottom-4 right-4' />
-        <img className='object-scale-down min-w-fit h-[50vh] sm:h-[60vh] lg:h-[70vh]' src={dogImg} alt='' />
+        <img className='object-scale-down min-w-fit h-[60vh] sm:h-[65vh] lg:h-[70vh]' src={dogImg} alt='' />
       </div>
       <div className='w- relative lg:w-5/12 xl:3/12 flex flex-col items-center min-h-[600px] md:min-h-full p-5 md:p-10'>
         <div className='flex w-full justify-end [&>*:hover]:opacity-60 [&>*]:cursor-pointer transition-all self-start gap-4 text-2xl lg:text-3xl'>

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const addressSchema = new mongoose.Schema({
   street: String,
@@ -43,7 +44,7 @@ const userSchema = new mongoose.Schema({
 },{timestamps:true});
 
 userSchema.pre('save',async function(next){
-  const salt = await bcrypt.genSalt();
+  const salt = await bcrypt.genSalt(8);
   this.password = await bcrypt.hash(this.password,salt);
   next();
 });

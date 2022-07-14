@@ -12,6 +12,16 @@ const {
   GraphQLNonNull,
 } = require('graphql');
 
+const userAddressType = new GraphQLObjectType({
+  name: 'Address',
+  fields: {
+    street: { type: GraphQLString },
+    city: { type: GraphQLString },
+    postal: { type: GraphQLString },
+    country: { type: GraphQLString },
+  },
+});
+
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: {
@@ -31,7 +41,7 @@ const UserType = new GraphQLObjectType({
       type: GraphQLString,
     },
     address: {
-      type: GraphQLString,
+      type: userAddressType,
     },
     password: {
       type: GraphQLString,
@@ -115,16 +125,27 @@ const mutation = new GraphQLObjectType({
         return user.save();
       },
     },
-    deleteUser:{
-      type:UserType,
-      args:{
-        id:{type:GraphQLNonNull(GraphQLID)}
+    deleteUser: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parent, args){
-        const user = User.findByIdAndDelete(args.id)
+      resolve(parent, args) {
+        const user = User.findByIdAndDelete(args.id);
         return user;
-      }
-    }
+      },
+    },
+    updateUser: {
+      type: UserType,
+      args: {
+        username: { type: GraphQLString },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+        avatar: { type: GraphQLString },
+        phone: { type: GraphQLInt },
+        address: { type: userAddressType }, //Add update user resolver
+      },
+    },
   },
 });
 
