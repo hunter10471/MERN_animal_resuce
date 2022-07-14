@@ -8,6 +8,8 @@
   padding: 0;
   scroll-behavior: smooth;
   scroll-margin: 120px;
+  -webkit-tap-highlight-color: transparent;
+
 }
 
 body {
