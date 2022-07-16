@@ -4,11 +4,13 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config({path:__dirname+'/.env'});
 const { graphqlHTTP } = require('express-graphql');
 const connect = require('./config/db');
-const schema = require('./schema/schema');
+const schema = require('./graphql/schema');
 const PORT = process.env.PORT || 4000;
+const cors = require('cors');
 
 
 connect();
+app.use(cors())
 app.use(cookieParser());
 app.use(
   '/graphql',

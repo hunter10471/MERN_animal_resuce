@@ -6,14 +6,12 @@ import {
   logoutSuccess,
   logoutFailure,
 } from './userRedux';
-import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 
-export const login = async (dispatch, user) => {
+export const login = async (dispatch, data) => {
   dispatch(loginStart());
   try {
-    const res = await axios.post('/api/auth/login', user);
-    dispatch(loginSuccess(res.data));
+    dispatch(loginSuccess(data));
   } catch (error) {
     dispatch(loginFailure());
     return error;

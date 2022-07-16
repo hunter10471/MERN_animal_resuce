@@ -25,10 +25,10 @@ const petSchema = new mongoose.Schema({
     },
     breed:{
         type:String,
-        required:true
+        default: 'Breed unspecified.'
     },
     pictures:[
-        {url:String,alt:String}
+        {url:String}
     ],
     vaccinated:{
         type: Boolean,

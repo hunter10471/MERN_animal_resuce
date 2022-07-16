@@ -6,14 +6,38 @@ import Button from '../components/Button';
 import googleIcon from '../assets/images/googleIcon.png';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../components/Logo';
-import useInput from '../hooks/useInput';
 import Icons from '../components/Icons';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../mutations/userMutations';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/apiCalls';
 
 const Login = () => {
   const [visible, setVisible] = useState(false);
-  const [bindEmail] = useInput('');
-  const [bindPassword] = useInput('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState(null);
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const [loginUser] = useMutation(LOGIN_USER, {
+    variables: {
+      email,
+      password,
+    },
+  });
+
+  const Submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await loginUser();
+      if (res.errors) throw new Error('Login error.');
+      login(dispatch, res.data.loginUser);
+    } catch (error: any) {
+      setError(error.message);
+      setTimeout(() => setError(null), 10000);
+      console.log(error);
+    }
+  };
 
   return (
     <div className='flex flex-row-reverse w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
@@ -41,20 +65,28 @@ const Login = () => {
         id='form'
         className='relative w-full lg:w-5/12 xl:3/12 flex items-center min-h-[600px] md:min-h-full justify-center'
       >
-        <form className='flex flex-col items-center justify-center max-w-[350px] w-full m-2 px-8 py-8 rounded-xl bg-white absolute md:static top-[-100px] shadow-lg md:shadow-none '>
+        <form
+          onSubmit={Submit}
+          className='flex flex-col items-center justify-center max-w-[350px] w-full m-2 px-8 py-8 rounded-xl bg-white absolute md:static top-[-100px] shadow-lg md:shadow-none '
+        >
           <span className='text-xs md:text-sm flex items-center gap-2 absolute top-[105%] left-[32%] md:top-16 md:left-6 text-blue-400 hover:underline'>
             <KeyboardBackspaceIcon />
             <Link to='/'>Back to home </Link>
           </span>
-          <Logo/>
+          <Logo />
           <h1 className='font-heading font-bold text-xl md:text-2xl my-1'>
             Welcome Back
           </h1>
           <h2 className='text-xs md:text-sm text-stone-500 font-medium mt-1 mb-10 '>
             Enter your credentials and login
           </h2>
+          {error && (
+            <span className='p-2 sm:px-4 sm:py-3  mb-5 rounded bg-rose-200 text-rose-500 lg:text-base md:text-sm text-xs'>
+              {error}
+            </span>
+          )}
           <input
-            {...bindEmail}
+            onChange={(e) => setEmail(e.target.value)}
             required
             type='email'
             placeholder='Email'
@@ -72,7 +104,7 @@ const Login = () => {
               )}
             </span>
             <input
-              {...bindPassword}
+              onChange={(e) => setPassword(e.target.value)}
               required
               type={visible ? 'text' : 'password'}
               placeholder='Password'
@@ -95,7 +127,7 @@ const Login = () => {
                 about='<a target="_blank" href="https://icons8.com/icon/V5cGWnc9R4xj/google">Google</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>'
               />
             }
-            classes='text-secondary'
+            classes='text-secondary mt-4'
             text='Sign In With Google '
             theme='outlined'
           />
