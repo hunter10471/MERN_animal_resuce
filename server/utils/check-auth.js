@@ -24,46 +24,45 @@ const verifyToken = (req,res,next) =>{
             jwt.verify(authHeader,process.env.JWT_SECRET,(err,user)=>{
                 if(err) throw err;
                 req.user = user;
+                req.isAuth = true;
+                next();
             });
-            next();
         } catch (error) {
-            res.redirect('/error',500);
             logger.error({message:'Token verification failed.',error});
-            throw error;
+            req.isAuth = false;
+            next();
         }
     }else{
-        res.redirect('/login',401);
         logger.error('Unauthenticated action.');
-        throw new Error('Unauthenticated action.');
+        req.isAuth = false;
+        next();
     }
 }
 
 
 const verifyTokenAndAuth = (req,res,next) =>{
     verifyToken(req,res,()=>{
-        if(req.user._id === req.params.id || req.user.isAdmin ){
-            next();
+        if(req.isAuth){
+            if(req.user._id === req.query.id || req.user.isAdmin ){
+                if(req.user.isAdmin) req.isAdmin = true;
+                else req.isAdmin = false;
+                req.isAuth = true;
+                next();
+            }else{
+                req.isAuth = false;
+                next();
+            }
         }
         else{
            logger.error('There was an error authenticating this action.');
-           res.redirect('/error',500);
+           req.isAuth = false;
+           next();
         };
     });
 }
 
 
-const verifyTokenAndAdmin = () =>{
-    verifyToken(req,res,()=>{
-        if(req.user.isAdmin){
-            next();
-        }
-        else{
-            logger.error('Forbidden admin action by unauthenticated user.')
-            res.redirect('/login',401);
-        }
-    })
-}
 
 
 
-module.exports = { generateAuthToken, verifyTokenAndAdmin, verifyTokenAndAuth };
+module.exports = { generateAuthToken, verifyTokenAndAuth };

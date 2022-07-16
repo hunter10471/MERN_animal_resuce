@@ -1,7 +1,5 @@
 const User = require('../models/User');
 const Pet = require('../models/Pet');
-const bcrypt = require('bcrypt');
-const { UserInputError } = require('apollo-server');
 
 const {
   GraphQLObjectType,
@@ -22,6 +20,7 @@ const {
 } = require('./typeDefs');
 
 const { loginUser, registerUser } = require('./resolvers/user');
+const { AuthenticationError } = require('apollo-server');
 
 //Queries
 
@@ -30,14 +29,17 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     getUsers: {
       type: new GraphQLList(UserType),
-      resolve(parent, args) {
+      resolve(parent, args, context) {
+        if (!context.req.isAdmin)
+          throw new AuthenticationError('Unauthenticated action.');
         return User.find();
       },
     },
     getUser: {
       type: UserType,
       args: { id: { type: GraphQLID } },
-      resolve(parent, args) {
+      resolve(parent, args, context) {
+        if (!context.req.isAuth) throw new Error('Unauthenticated action.');
         return User.findById(args.id);
       },
     },
@@ -62,7 +64,6 @@ const RootQuery = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-
     //<-----REGISTER USER----->//
 
     registerUser: {
@@ -73,8 +74,8 @@ const mutation = new GraphQLObjectType({
         password: { type: GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, args) {
-      const user = await registerUser(parent,args);
-      return user;
+        const user = await registerUser(parent, args);
+        return user;
       },
     },
 
@@ -87,8 +88,8 @@ const mutation = new GraphQLObjectType({
         password: { type: GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, args) {
-      const user = await  loginUser(parent,args);
-      return user;
+        const user = await loginUser(parent, args);
+        return user;
       },
     },
     deleteUser: {
@@ -96,7 +97,11 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parent, args) {
+      resolve(parent, args, context) {
+        if (!context.req.isAuth)
+          throw new AuthenticationError(
+            'You can only delete your own account.'
+          );
         const user = User.findByIdAndDelete(args.id);
         return user;
       },
@@ -114,7 +119,11 @@ const mutation = new GraphQLObjectType({
         postal: { type: GraphQLString },
         country: { type: GraphQLString },
       },
-      resolve(parent, args) {
+      resolve(parent, args, context) {
+        if (!context.req.isAuth)
+          throw new AuthenticationError(
+            'You can only update your own account.'
+          );
         const { id, ...others } = args;
         return User.findByIdAndUpdate(
           args.id,
@@ -133,11 +142,13 @@ const mutation = new GraphQLObjectType({
         age: { type: GraphQLNonNull(GraphQLInt) },
         type: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parent, args) {
+      async resolve(parent, args, context) {
+        if (!context.req.isAuth)
+          throw new AuthenticationError('Login to add a pet.');
         const pet = new Pet({
           ...args,
         });
-        return pet.save();
+        return await pet.save();
       },
     },
     deletePet: {
@@ -145,7 +156,9 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parents, args) {
+      resolve(parent, args, context) {
+        if (!context.req.isAuth)
+          throw new AuthenticationError('You can only delete your own pet.');
         return Pet.findByIdAndDelete(args.id);
       },
     },
@@ -164,6 +177,16 @@ const mutation = new GraphQLObjectType({
         description: { type: GraphQLString },
         punchline: { type: GraphQLString },
         boldline: { type: GraphQLString },
+      },
+      resolve(parent, args, context) {
+        if (!context.req.isAuth)
+          throw new AuthenticationError('You can only delete your own pet.');
+        const { id, ...others } = args;
+        return Pet.findByIdAndUpdate(
+          args.id,
+          { $set: { ...others } },
+          { new: true }
+        );
       },
     },
   },

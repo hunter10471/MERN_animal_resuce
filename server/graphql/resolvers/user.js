@@ -4,7 +4,7 @@ const { UserInputError } = require('apollo-server');
 const { generateAuthToken } = require('../../utils/check-auth');
 const logger = require('../../utils/logger');
 
-const loginUser = async (parent, args) => {
+const loginUser = async (parent,args) => {
   const user = await User.findOne({ email: args.email });
   try {
     if (!user) throw new Error('User does not exists.');
@@ -22,7 +22,7 @@ const loginUser = async (parent, args) => {
   }
 };
 
-const registerUser = async (parent, args) => {
+const registerUser = async (parent,args) => {
   const existingUser = await User.findOne({
     $or: [{ username: args.username }, { email: args.email }],
   });
