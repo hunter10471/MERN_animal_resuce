@@ -19,7 +19,7 @@ const {
   PetPreviousOwnerType,
 } = require('./typeDefs');
 
-const { loginUser, registerUser } = require('./resolvers/user');
+const { loginUser, registerUser, googleContinue } = require('./resolvers/user');
 const { AuthenticationError } = require('apollo-server');
 
 //Queries
@@ -27,6 +27,9 @@ const { AuthenticationError } = require('apollo-server');
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
+
+        //<-----GET ALL USERS----->//
+
     getUsers: {
       type: new GraphQLList(UserType),
       resolve(parent, args, context) {
@@ -35,6 +38,9 @@ const RootQuery = new GraphQLObjectType({
         return User.find();
       },
     },
+
+            //<-----GET USER----->//
+
     getUser: {
       type: UserType,
       args: { id: { type: GraphQLID } },
@@ -43,12 +49,18 @@ const RootQuery = new GraphQLObjectType({
         return User.findById(args.id);
       },
     },
+
+          //<-----GET ALL PETS----->//
+
     getPets: {
       type: new GraphQLList(PetType),
       resolve(parent, args) {
         return Pet.find();
       },
     },
+
+       //<-----GET PET----->//
+
     getPet: {
       type: PetType,
       args: { id: { type: GraphQLID } },
@@ -92,6 +104,27 @@ const mutation = new GraphQLObjectType({
         return user;
       },
     },
+
+
+        //<----LOGIN/REGISTER WITH GOOGLE---->//
+        loginUserGoogle: {
+          type: UserType,
+          args: {
+            email: { type: GraphQLNonNull(GraphQLString) },
+            username: { type: GraphQLNonNull(GraphQLString) },
+            avatar: { type: GraphQLString},
+            password: { type: GraphQLNonNull(GraphQLString) },
+            googleId: { type: GraphQLNonNull(GraphQLString) },
+           },
+          async resolve(parent, args) {
+            const user = await googleContinue(parent,args);
+            return user;
+          },
+        },
+
+
+        //<----DELETE-USER---->//
+
     deleteUser: {
       type: UserType,
       args: {
@@ -106,6 +139,10 @@ const mutation = new GraphQLObjectType({
         return user;
       },
     },
+
+        //<----UPDATE-USER---->//
+
+
     updateUser: {
       type: UserType,
       args: {
@@ -134,6 +171,10 @@ const mutation = new GraphQLObjectType({
         );
       },
     },
+
+        //<----ADD-PET---->//
+
+
     addPet: {
       type: PetType,
       args: {
@@ -151,6 +192,10 @@ const mutation = new GraphQLObjectType({
         return await pet.save();
       },
     },
+
+        //<----DELETE-PET---->//
+
+
     deletePet: {
       type: PetType,
       args: {
@@ -162,6 +207,10 @@ const mutation = new GraphQLObjectType({
         return Pet.findByIdAndDelete(args.id);
       },
     },
+
+        //<----UPDATE-PET---->//
+
+
     updatePet: {
       type: PetType,
       args: {

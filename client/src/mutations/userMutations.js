@@ -10,6 +10,7 @@ export const REGISTER_USER = gql`
       username
       email
       token
+      _id
     }
   }
 `;
@@ -21,9 +22,30 @@ export const LOGIN_USER = gql`
   ) {
     loginUser(password: $password, email: $email) {
       username
+      avatar
       email
       token
       _id
     }
   }
+`;
+
+
+export const GOOGLE_CONTINUE = gql`
+  mutation loginUserGoogle(
+    $password: String!
+    $email: String!
+    $avatar: String
+    $googleId: String!
+    $username: String!
+  ){
+    loginUserGoogle(password:$password, email:$email, googleId:$googleId, avatar:$avatar, username:$username){
+      username
+      email
+      token
+      avatar
+      _id
+    }
+  }
+
 `;

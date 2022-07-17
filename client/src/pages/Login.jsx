@@ -1,57 +1,114 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Button from '../components/Button';
-import googleIcon from '../assets/images/googleIcon.png';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../components/Logo';
 import Icons from '../components/Icons';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import { REGISTER_USER } from '../mutations/userMutations';
 import { useMutation } from '@apollo/client';
-import { GraphQLError } from 'graphql';
+import { GOOGLE_CONTINUE, LOGIN_USER } from '../mutations/userMutations';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/apiCalls';
+import jwtDecode from 'jwt-decode';
 
-const Register = () => {
+const Login = () => {
   const [visible, setVisible] = useState(false);
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const [username, setUsername] = useState('');
+  const [googleId, setGoogleId] = useState('');
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const navigate = useNavigate();
-  const [registerUser] = useMutation(REGISTER_USER, {
+  const render = useRef(false);
+
+  const dispatch = useDispatch();
+
+  const [loginUser] = useMutation(LOGIN_USER, {
     variables: {
-      username,
       email,
       password,
     },
   });
+  const [loginUserGoogle] = useMutation(GOOGLE_CONTINUE, {
+    variables: {
+      email,
+      password,
+      username,
+      googleId,
+      avatar,
+    },
+  });
 
-  const Submit = async (e: React.FormEvent) => {
+  const Submit = async (e) => {
     e.preventDefault();
     try {
-      const res = await registerUser();
-      if (res.errors) throw new Error('Registration error.');
-      setSuccess(true);
-      setTimeout(() => navigate('/login'),3000);
-    } catch (error: any) {
+      const res = await loginUser();
+      if (res.errors) throw new Error('Login error.');
+      await login(dispatch, res.data.loginUser);
+    } catch (error) {
       setError(error.message);
       setTimeout(() => setError(null), 10000);
       console.log(error);
     }
   };
 
+  const handleCallback = async(response) => {
+    try {
+      const user = jwtDecode(response.credential);
+      setEmail(user.email);
+      setGoogleId(`google_${user.email}`);
+      setPassword(user.email);
+      setAvatar(user.picture);
+      setUsername(user.name);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+
+  useEffect(()=>{
+    const googleLogin = async() =>{
+      const res = await loginUserGoogle();
+      if (res.errors) throw new Error('Login error.');
+      await login(dispatch, res.data.loginUserGoogle);
+    };
+    if(render) googleLogin();
+    else render.current.value = true;
+  },[googleId]);
+
+  useEffect(() => {
+    /* global google */
+    window.onload = async() => {
+      google.accounts.id.initialize({
+        client_id:
+          '784202356875-failmrkq5sj00coh02vfcdl5ai1lqta2.apps.googleusercontent.com', //eslint-disable-line
+        callback: handleCallback,
+      });
+      google.accounts.id.renderButton(document.getElementById('button'), {
+        theme: 'filled_black',
+        size: 'large',
+        shape: 'rectangular',
+        text: 'continue_with',
+        width: 280,
+      });
+      google.accounts.id.prompt();
+    };
+  }, []);
+
   return (
-    <div className='flex w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
-      <div className='w-full lg:w-7/12 xl:w-9/12 bg-registerImg bg-cover bg-center'>
+    <div className='flex flex-row-reverse w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
+      <div className='w-full lg:w-7/12 xl:w-9/12 bg-loginImg bg-cover bg-center'>
         <div className='flex flex-col justify-center relative w-full h-screen bg-primary/70'>
-          <h1 className='lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-extrabold font-heading text-white mx-4 md:mx-6 my-2 max-w-[700px] px-2 '>
-            Raising Voice For The Voiceless
+          <h1 className='lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-extrabold font-heading text-white mx-4 px-2 md:mx-6 my-2 max-w-[700px] '>
+            Let&apos;s save more lives together
           </h1>
-          <h2 className='mx-4 md:mx-6 px-2 text-white font-light md:font-normal max-w-[500px] text-base lg:text-lg'>
-            Be a part of Pakistan’s first e-platform adding meaning to precious
-            lives around us and giving them another chance.
+          <h2 className='mx-4 px-2 md:mx-6 text-white font-light md:font-normal max-w-[500px] text-base lg:text-lg'>
+            It&apos;s good to see you again! Thank you for being a part of
+            adding meaning to precious lives around us and giving them another
+            chance.
           </h2>
           <Icons classes='text-white mt-4 px-2 mx-4 md:mx-6' />
           <span className='md:hidden block'>
@@ -77,28 +134,16 @@ const Register = () => {
           </span>
           <Logo />
           <h1 className='font-heading font-bold text-xl md:text-2xl my-1'>
-            Create An Account
+            Welcome Back
           </h1>
-          <h2 className='text-xs md:text-sm text-stone-500 font-medium mt-1 mb-10'>
-            Enter your details and let&apos;s get started
+          <h2 className='text-xs md:text-sm text-stone-500 font-medium mt-1 mb-10 '>
+            Enter your credentials and login
           </h2>
           {error && (
             <span className='p-2 sm:px-4 sm:py-3  mb-5 rounded bg-rose-200 text-rose-500 lg:text-base md:text-sm text-xs'>
               {error}
             </span>
           )}
-          {success && (
-            <span className='p-2 sm:px-4 sm:py-3 mb-5 rounded bg-emerald-100  text-emerald-500 lg:text-base md:text-sm text-xs'>
-              Account created successfully, you will be redirected to login.
-            </span>
-          )}
-          <input
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            type='text'
-            placeholder='Name'
-            className='placeholder:italic border-b-2 transition-all duration-300 hover:border-blue-500 focus:border-blue-500 max-w-[350px] w-full pb-2 px-1 my-2 text-sm focus:outline-none  '
-          />
           <input
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -125,39 +170,19 @@ const Register = () => {
               className='placeholder:italic border-b-2 transition-all duration-300 hover:border-blue-500 focus:border-blue-500 w-full pb-2 px-1 my-2 text-sm focus:outline-none  '
             />
           </div>
-          <span className='text-stone-500 md:text-sm text-xs flex items-center gap-2 my-2 w-full'>
-            <input
-              className='mb-[2px] md:mb-1'
-              type='checkbox'
-              defaultChecked
-            />
-            Remember Me
-          </span>
           <span className='text-stone-500 md:text-sm text-xs mt-1 mb-6 w-full'>
-            By creating an account you agree to our{' '}
             <b className='text-blue-500 cursor-pointer hover:underline'>
-              {' '}
-              Terms & Conditions
+              Forgot your password?
             </b>
-            .
           </span>
-          <Button text='Create Account' theme='filled' />
+          <Button text='Log In' theme='filled' />
           <Button
-            onClick={(e) => e.preventDefault()}
-            icon={
-              <img
-                className='w-[20px] md:w-[25px] md:h-[25px] h-[20px] object-scale-down rounded-[50%] mr-1'
-                src={googleIcon}
-                alt='Google-Icon'
-                about='<a target="_blank" href="https://icons8.com/icon/V5cGWnc9R4xj/google">Google</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>'
-              />
-            }
-            classes='text-secondary mt-4'
-            text='Sign Up With Google '
+            id='button'
+            classes='text-secondary mt-4 border-none w-fit'
             theme='outlined'
           />
           <span className='transition-all md:text-sm text-xs text-stone-500 font-medium pt-4 mt-4 w-full text-center border-t-2 cursor-pointer hover:text-stone-400'>
-            <Link to='/login'> Already have an account ? </Link>
+            <Link to='/register'> Don&apos;t have an account ? </Link>
           </span>
         </form>
       </div>
@@ -165,4 +190,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

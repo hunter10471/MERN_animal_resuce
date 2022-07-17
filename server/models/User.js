@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: [true, 'Email is already in use.'],
     },
+    googleId:{
+      type:String,
+      default:null
+    },
     avatar: {
       type: String,
       default: null,

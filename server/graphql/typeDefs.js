@@ -45,6 +45,9 @@ const {
       token: {
         type: GraphQLString,
       },
+      googleId:{
+        type:GraphQLString
+      }
       
     },
   });
