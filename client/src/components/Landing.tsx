@@ -9,6 +9,7 @@ import Logo from './Logo';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/apiCalls';
 import { Link } from 'react-router-dom';
+import blob from '../assets/images/blob.svg';
 
 const Landing = () => {
   const dispatch = useDispatch();
@@ -23,14 +24,24 @@ const Landing = () => {
         <span className='absolute top-2 lg:top-4  right-[calc(50%_-_32px)]  md:right-[-100px]  rounded-[50%] bg-white/40'>
           <Logo />
         </span>
-        <Icons classes='text-white flex-col absolute bottom-4 right-4' />
+        <Icons classes='text-white flex-col absolute bottom-4 right-4 bg-black/20' />
         <img
           className='object-scale-down min-w-fit h-[60vh] sm:h-[65vh] lg:h-[70vh]'
           src={dogImg}
           alt=''
         />
+        <img
+          className='absolute opacity-20 z-[-1] w-[40vw] right-0 md:left-0 top-[100%] md:top-[150%]'
+          src={blob}
+          alt='blob'
+        />
       </div>
       <div className='w- relative lg:w-5/12 xl:3/12 flex flex-col items-center min-h-[600px] md:min-h-full p-5 md:p-10'>
+        <img
+          className='absolute opacity-20 z-[-1] w-[40vw] rotate-45 left-0 top-[80%]'
+          src={blob}
+          alt='blob'
+        />
         <div className='flex w-full justify-end  transition-all self-start gap-4 text-2xl lg:text-3xl'>
           {user ? (
             <div className='flex items-center gap-5 [&>*:hover]:opacity-60 [&>*]:cursor-pointer'>

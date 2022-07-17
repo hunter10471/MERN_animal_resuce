@@ -13,6 +13,7 @@ import { useMutation } from '@apollo/client';
 import jwtDecode from 'jwt-decode';
 import { login } from '../redux/apiCalls';
 import { useDispatch } from 'react-redux';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Register = () => {
   const [visible, setVisible] = useState(false);
@@ -107,7 +108,7 @@ const Register = () => {
 
 
   return (
-    <div className='flex w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
+    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.2,ease:'linear'}} exit={{opacity:0}} className='flex w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
       <div className='w-full lg:w-7/12 xl:w-9/12 bg-registerImg bg-cover bg-center'>
         <div className='flex flex-col justify-center relative w-full h-screen bg-primary/70'>
           <h1 className='lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-extrabold font-heading text-white mx-4 md:mx-6 my-2 max-w-[700px] px-2 '>
@@ -216,7 +217,7 @@ const Register = () => {
           </span>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

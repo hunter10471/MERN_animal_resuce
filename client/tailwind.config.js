@@ -20,6 +20,7 @@ module.exports = {
         registerImg: "url('/src/assets/images/registerImg.jpg')", //eslint-disable-line
         loginImg: "url('/src/assets/images/loginImg.jpg')", //eslint-disable-line
         landingImg: "url('/src/assets/images/landing.png')", //eslint-disable-line
+        heroImg: "url('/src/assets/images/hero.jpg')", //eslint-disable-line
       },
     },
   },

@@ -9,7 +9,7 @@ interface IIconsProps {
 }
 
 const Icons = (props: IIconsProps) => {
-  return <div className={`flex gap-4 w-fit md:gap-5 bg-black/20 p-2 lg:py-2 lg:px-4 rounded-xl lg:gap-6 text-lg sm:text-xl lg:text-2xl ${props.classes} [&>*:hover]:opacity-60 cursor-pointer`}>
+  return <div className={`flex gap-4 w-fit md:gap-5  p-2 lg:py-2 lg:px-4 rounded-xl lg:gap-6 text-lg sm:text-xl lg:text-2xl ${props.classes} [&>*:hover]:opacity-60 cursor-pointer`}>
     <FacebookIcon fontSize='inherit' />
     <TwitterIcon fontSize='inherit' />
     <YouTubeIcon fontSize='inherit' />

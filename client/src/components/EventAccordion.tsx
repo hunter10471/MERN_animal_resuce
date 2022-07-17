@@ -28,7 +28,7 @@ const EventAccordion = (props:IEventProps) => {
       </div>
       <div className='p-4'>
         <span className='text-sm md:text-base font-bold text-stone-600'>{props.monthYear}</span>
-        <h2 className='capitalize text-xl md:text-2xl font-heading font-bold my-2'>{props.monthYear}</h2>
+        <h2 className='capitalize text-xl md:text-2xl font-heading font-bold my-2'>{props.title}</h2>
         <div className='flex flex-col p-2'>
           <span className='text-xs md:text-sm font-medium text-stone-500 flex items-center gap-2 my-1'><AccessTimeIcon/>{props.time}</span>
           <span className='text-xs md:text-sm font-medium text-stone-500 flex items-center gap-2 my-1 capitalize'><LocationOnIcon/> {props.location}</span>

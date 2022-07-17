@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../components/Logo';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -10,10 +10,16 @@ import Navbar from '../components/Navbar';
 import { useQuery } from '@apollo/client';
 import { GET_PET } from '../queries/pet';
 
+
+
 const SinglePet = () => {
   const [picture, setPicture] = useState(0);
   const id = useLocation().pathname.split('/')[2];
   const { loading, error, data } = useQuery(GET_PET, { variables: { id } });
+
+  useEffect(()=>{
+    scroll(0,0);
+  },[]);
 
   return (
     <div className='flex justify-center text-secondary'>
