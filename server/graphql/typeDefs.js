@@ -5,7 +5,10 @@ const {
     GraphQLBoolean,
     GraphQLInt,
     GraphQLInputObjectType,
+    GraphQLList,
+
   } = require('graphql');
+const Pet = require('../models/Pet');
   
   
   
@@ -22,7 +25,7 @@ const {
         type: GraphQLString,
       },
       phone: {
-        type: GraphQLString,
+        type: GraphQLInt,
       },
       avatar: {
         type: GraphQLString,
@@ -52,32 +55,17 @@ const {
     },
   });
   
-  const PetType = new GraphQLObjectType({
-    name: 'Pet',
-    fields: {
-      id: {
-        type: GraphQLID,
-      },
-      name: {
-        type: GraphQLString,
-      },
-      ownerName: {
-        type: GraphQLString,
-      },
-      age: {
-        type: GraphQLInt,
-      },
-      owner: {
-        type: UserType,
-        resolve(parent, args) {
-          return User.findById(parent.ownerId);
-        },
-      },
-    },
-  });
-  
-  const PetPictureType = new GraphQLInputObjectType({
+  const PetPictureType = new GraphQLObjectType({
     name:'Picture',
+    fields:{
+      url:{
+        type: GraphQLString
+      }
+    }
+  })
+
+  const PetPictureInputType = new GraphQLInputObjectType({
+    name:'InputPicture',
     fields:{
       url:{
         type: GraphQLString
@@ -94,5 +82,50 @@ const {
     }
   })
   
+  const PetType = new GraphQLObjectType({
+    name: 'Pet',
+    fields: {
+      id: {
+        type: GraphQLID,
+      },
+      name: {
+        type: GraphQLString,
+      },
+      ownerName: {
+        type: GraphQLString,
+      },
+      age: {
+        type: GraphQLString,
+      },
+      breed: {
+        type: GraphQLString,
+      },
+      type: {
+        type: GraphQLString,
+      },
+      gender: {
+        type: GraphQLString
+      },
+      description: {
+        type: GraphQLString
+      },
+      litterTrained: {
+        type: GraphQLBoolean
+      },
+      vaccinated: {
+        type: GraphQLBoolean
+      },
+      owner: {
+        type: UserType,
+        resolve(parent, args) {
+          return User.findById(parent.ownerId);
+        },
+      },
+      pictures:{
+        type: new GraphQLList(PetPictureType),
+      }
+    },
+  });
+  
 
-  module.exports = { UserType, PetType, PetPictureType, PetPreviousOwnerType }
+  module.exports = { UserType, PetType, PetPictureInputType, PetPreviousOwnerType }

@@ -45,9 +45,9 @@ const Landing = () => {
             I&apos;m looking for a nice cozy place to call home.
           </h2>
           <Button classes='max-w-[200px]' theme='filled' text='Adopt Me' />
-          <button className='absolute right-6 bg-white text-primary border-2 border-primary hover:scale-105 hover:shadow-lg transition-all rounded-[50%] p-1 sm:p-2'>
+          {/* <button className='absolute right-6 bg-white text-primary border-2 border-primary hover:scale-105 hover:shadow-lg transition-all rounded-[50%] p-1 sm:p-2'>
             <ArrowForwardIosIcon fontSize='small' />
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

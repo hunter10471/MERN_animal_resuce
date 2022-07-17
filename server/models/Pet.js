@@ -11,7 +11,7 @@ const petSchema = new mongoose.Schema({
         required:true
     },
     age:{
-        type:Number,
+        type:String,
         required:true
     },
     type:{
@@ -20,7 +20,6 @@ const petSchema = new mongoose.Schema({
     },
     gender:{
         type:String,
-        enum: ['male','female'],
         default:'male'
     },
     breed:{

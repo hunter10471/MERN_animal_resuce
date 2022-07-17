@@ -15,7 +15,7 @@ const {
 const {
   UserType,
   PetType,
-  PetPictureType,
+  PetPictureInputType,
   PetPreviousOwnerType,
 } = require('./typeDefs');
 
@@ -218,7 +218,7 @@ const mutation = new GraphQLObjectType({
         name: { type: GraphQLString },
         gender: { type: GraphQLString },
         breed: { type: GraphQLString },
-        pictures: { type: GraphQLList(PetPictureType) },
+        pictures: { type: GraphQLList(PetPictureInputType) },
         vaccinated: { type: GraphQLBoolean },
         favouriteFood: { type: GraphQLString },
         litterTrained: { type: GraphQLBoolean },
