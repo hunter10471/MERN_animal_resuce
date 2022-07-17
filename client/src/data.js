@@ -1,4 +1,10 @@
+import tiger from './assets/images/tiger.jpg';
+import elephant from './assets/images/elephant.jpg';
+import bird from './assets/images/bird.jpg';
+
+
 //Footer data
+
 
 export const aboutUs = [
   'Careers',
@@ -31,4 +37,40 @@ export const navData = [
   'Report',
   'About Us',
   'Contact Us'
+];
+
+//events data
+
+
+export const events = [
+  {
+    day:'sat',
+    date:20,
+    img:tiger,
+    monthYear:'JUN 2022',
+    title:'Tigers need us',
+    time:'7:30pm - 8:30pm',
+    location:'54th liones street, Piccadlly',
+    color:'#f1c40f'
+  },
+  {
+    day:'mon',
+    date:12,
+    img:elephant,
+    monthYear:'NOV 2022',
+    title:'Hunting needs to stop',
+    time:'5:30pm - 6:30pm',
+    location:'6-N, rivers road, vienna',
+    color:' #8e44ad '
+  },
+  {
+    day:'wed',
+    date:15,
+    img:bird,
+    monthYear:'JUL 2022',
+    title:'Nature among all',
+    time:'3:30pm - 4:00pm',
+    location:'23rd johns, saint-martin',
+    color:' #2ecc71'
+  },
 ];

@@ -17,7 +17,7 @@ interface ISinglePetProps {
 
 const SinglePet = (props: ISinglePetProps) => {
   return (
-    <Link to={`/pet/${props.id}`} >
+    <Link to={`/pet/${props.id}`}>
       <div className='flex flex-col group transition-all duration-300 ease-in-out overflow-hidden cursor-pointer hover:scale-105 justify-end relative w-[150px] h-[200px] sm:w-[200px] sm:h-[250px] lg:w-[250px] lg:h-[300px] m-4 hover:shadow-2xl  shadow-xl rounded-xl'>
         <FavoriteBorderIcon
           className='absolute top-4 right-4 transition-all duration-300 cursor-pointer  bg-white p-1 rounded-xl text-primary border-2 hover:scale-105 hover:text-white hover:bg-primary '
@@ -42,9 +42,13 @@ const SinglePet = (props: ISinglePetProps) => {
               </span>
               <span className='flex items-center gap-1'>
                 {props.gender === ('female' || 'Female') ? (
-                  <FemaleIcon fontSize='inherit' />
+                  <>
+                    <FemaleIcon fontSize='inherit' />
+                  </>
                 ) : (
-                  <MaleIcon fontSize='inherit' />
+                  <>
+                    <MaleIcon fontSize='inherit' />
+                  </>
                 )}{' '}
                 {props.gender}
               </span>

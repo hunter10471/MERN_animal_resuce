@@ -2,15 +2,20 @@ import React from 'react';
 import Icons from './Icons';
 import Navbar from './Navbar';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import dogImg from '../assets/images/dog.png';
 import Avatar from './Avatar';
 import Button from './Button';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Logo from './Logo';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/apiCalls';
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.currentUser);
+  const handleLogout = () => {
+    logout(dispatch);
+  };
   return (
     <div className='flex w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
       <div className=' flex flex-col items-center justify-between  w-full h-full min-h-screen relative lg:w-7/12 xl:w-9/12 bg-primary bg-landingImg bg-center '>
@@ -19,12 +24,36 @@ const Landing = () => {
           <Logo />
         </span>
         <Icons classes='text-white flex-col absolute bottom-4 right-4' />
-        <img className='object-scale-down min-w-fit h-[60vh] sm:h-[65vh] lg:h-[70vh]' src={dogImg} alt='' />
+        <img
+          className='object-scale-down min-w-fit h-[60vh] sm:h-[65vh] lg:h-[70vh]'
+          src={dogImg}
+          alt=''
+        />
       </div>
       <div className='w- relative lg:w-5/12 xl:3/12 flex flex-col items-center min-h-[600px] md:min-h-full p-5 md:p-10'>
-        <div className='flex w-full justify-end [&>*:hover]:opacity-60 [&>*]:cursor-pointer transition-all self-start gap-4 text-2xl lg:text-3xl'>
-          <PersonOutlineIcon fontSize='inherit' />
-          <FavoriteBorderIcon fontSize='inherit' />
+        <div className='flex w-full justify-end  transition-all self-start gap-4 text-2xl lg:text-3xl'>
+          {user ? (
+            <div className='flex items-center gap-5 [&>*:hover]:opacity-60 [&>*]:cursor-pointer'>
+              {' '}
+              <PersonOutlineIcon fontSize='inherit' />
+              <Button
+                onClick={handleLogout}
+                classes='w-fit'
+                text='logout'
+                theme='outlined'
+              />
+            </div>
+          ) : (
+            <div className='flex items-center gap-5 [&>*:hover]:opacity-60 [&>*]:cursor-pointer'>
+              <Link to='/register'>
+                {' '}
+                <Button text='Register' theme='filled' />{' '}
+              </Link>
+              <Link to='/login'>
+                <Button text='Login' theme='outlined' />{' '}
+              </Link>
+            </div>
+          )}
         </div>
         <div className='flex flex-col h-full justify-center'>
           <div className='flex gap-2 w-full my-4 md:my-8'>
@@ -45,9 +74,6 @@ const Landing = () => {
             I&apos;m looking for a nice cozy place to call home.
           </h2>
           <Button classes='max-w-[200px]' theme='filled' text='Adopt Me' />
-          {/* <button className='absolute right-6 bg-white text-primary border-2 border-primary hover:scale-105 hover:shadow-lg transition-all rounded-[50%] p-1 sm:p-2'>
-            <ArrowForwardIosIcon fontSize='small' />
-          </button> */}
         </div>
       </div>
     </div>

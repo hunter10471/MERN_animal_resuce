@@ -9,6 +9,7 @@ module.exports = {
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],
         sans: ['Roboto', 'sans-serif'],
+        central:['Caveat', 'sans-serif']
       },
       colors: {
         primary: '#EF6F6F',

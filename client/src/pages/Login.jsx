@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Button from '../components/Button';
@@ -22,7 +22,7 @@ const Login = () => {
   const [googleId, setGoogleId] = useState('');
   const [error, setError] = useState(null);
   const render = useRef(false);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [loginUser] = useMutation(LOGIN_USER, {
@@ -74,6 +74,7 @@ const Login = () => {
       const res = await loginUserGoogle();
       if (res.errors) throw new Error('Login error.');
       await login(dispatch, res.data.loginUserGoogle);
+      navigate('/',{replace:true});
     };
     if(render) googleLogin();
     else render.current.value = true;

@@ -18,7 +18,7 @@ export const login = async (dispatch, data) => {
   }
 };
 
-const logout = async (dispatch) => {
+export const logout = async (dispatch) => {
   try {
     <Navigate to='/login' />;
     dispatch(logoutSuccess());
