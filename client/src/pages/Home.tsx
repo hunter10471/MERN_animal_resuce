@@ -5,6 +5,7 @@ import Landing from '../components/Landing';
 import Pets from '../components/Pets';
 import Subscribe from '../components/Subscribe';
 import { motion, AnimatePresence } from 'framer-motion';
+import Loader from '../components/Loader';
 
 
 const Home = () => {

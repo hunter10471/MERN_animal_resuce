@@ -3,7 +3,7 @@ import SinglePet from './SinglePet';
 import { useQuery } from '@apollo/client';
 import { GET_PETS } from '../queries/pet';
 import { motion } from 'framer-motion';
-
+import Loader from './Loader';
 const containerVariant = {
   hidden: {
     opacity: 0,
@@ -39,7 +39,7 @@ const PetsContainer = () => {
   const { loading, error, data } = useQuery(GET_PETS);
 
   return (
-    <motion.div
+    loading ? <Loader/> : <motion.div
       variants={containerVariant}
       initial='hidden'
       whileInView='visible'

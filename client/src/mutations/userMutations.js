@@ -25,6 +25,7 @@ export const LOGIN_USER = gql`
       avatar
       email
       token
+      isAdmin
       _id
     }
   }
@@ -44,6 +45,7 @@ export const GOOGLE_CONTINUE = gql`
       email
       token
       avatar
+      isAdmin
       _id
     }
   }

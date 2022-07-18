@@ -4,6 +4,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Footer from './components/Footer';
+import Contact from './pages/Contact';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import SinglePet from './pages/SinglePet';
 import { useSelector } from 'react-redux';
@@ -31,6 +32,7 @@ function App() {
             element={user ? <Navigate to='/' replace /> : <Register />}
           />
           <Route path='/pet/:id' element={<SinglePet />} />
+          <Route path='/contact' element={<Contact/>} />
         </Routes>
       </AnimatePresence>
       <Footer />
