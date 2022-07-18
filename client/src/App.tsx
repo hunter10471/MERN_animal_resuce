@@ -9,6 +9,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import SinglePet from './pages/SinglePet';
 import { useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
+import About from './pages/About';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -33,6 +34,7 @@ function App() {
           />
           <Route path='/pet/:id' element={<SinglePet />} />
           <Route path='/contact' element={<Contact/>} />
+          <Route path='/about' element={<About/>} />
         </Routes>
       </AnimatePresence>
       <Footer />

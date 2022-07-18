@@ -32,11 +32,11 @@ export const needHelp = [
 ];
 
 export const navData = [
-  'Donate',
-  'Adopt',
-  'Report',
-  'About Us',
-  'Contact Us'
+  'Donate-/donate',
+  'Adopt-/adopt',
+  'Report-/contact',
+  'About Us-/about',
+  'Contact Us-/contact'
 ];
 
 //events data

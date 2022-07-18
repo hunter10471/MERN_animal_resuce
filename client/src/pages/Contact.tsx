@@ -5,7 +5,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Icons from '../components/Icons';
 import Button from '../components/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 const LeftContainer = () => {
   return (
     <div className='w-full md:w-4/12 min-w-[200px] min-h-[350px] text-white flex flex-col justify-between  bg-primary p-6 md:p-10 lg:p-14 xl:p-20'>
@@ -72,15 +73,22 @@ const MiddleContainer = () => {
 
 const Contact = () => {
   return (
-    <div className='flex flex-wrap mt-20 md:mt-0 justify-center items-center md:items-stretch flex-col-reverse w-full md:flex-row text-secondary min-h-screen'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, ease: 'linear' }}
+      exit={{ opacity: 0 }}
+      className='flex flex-wrap mt-20 md:mt-0 justify-center items-center md:items-stretch flex-col-reverse w-full md:flex-row text-secondary min-h-screen'
+    >
       <LeftContainer />
       <MiddleContainer />
       <div className=' items-center m-10 absolute right-2 top-2 md:flex  text-blue-500 cursor-pointer transition-all hover:underline '>
-        <span className='text-xs sm:text-base md:text-lg font-medium mr-1'>Home</span>
-        <ArrowForwardIcon
-        />
+        <span className='text-xs sm:text-base md:text-lg font-medium mr-1'>
+          <Link to='/'>Home</Link>
+        </span>
+        <ArrowForwardIcon />
       </div>
-    </div>
+    </motion.div>
   );
 };
 
