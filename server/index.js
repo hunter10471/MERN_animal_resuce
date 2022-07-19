@@ -8,6 +8,7 @@ const connectDB = require('./config/db');
 const schema = require('./graphql/schema');
 const PORT = process.env.PORT || 4000;
 const cors = require('cors');
+const path = require('path');
 const { verifyTokenAndAuth } = require('./utils/check-auth');
 
 
