@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const { graphqlHTTP } = require('express-graphql');
@@ -11,10 +10,23 @@ const cors = require('cors');
 const path = require('path');
 const { verifyTokenAndAuth } = require('./utils/check-auth');
 
+const corsOptions = {
+  origin(origin, callback) {
+      callback(null, true);
+  },
+  credentials: true
+};
 
-app.use(cors());
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,token');
+  next();
+}
+
 connectDB();
-app.use(cookieParser());
+app.use(cors(corsOptions));
+app.use(allowCrossDomain);
 app.use(bodyParser.json());
 app.use(verifyTokenAndAuth);
 
