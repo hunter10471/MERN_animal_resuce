@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config();
 const { graphqlHTTP } = require('express-graphql');
 const connectDB = require('./config/db');
 const schema = require('./graphql/schema');
@@ -17,11 +17,17 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(verifyTokenAndAuth);
 
+__dirname = path.resolve();
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
+
 app.use(
   '/graphql',
   graphqlHTTP((req, res, graphQLParams) => ({
     schema: schema,
-    graphiql: process.env.NODE_ENV === 'development',
     context: { req, res },
   }))
 );
