@@ -26,9 +26,9 @@ const SinglePet = () => {
       id,
     },
     context: {
-      isAdmin: user.isAdmin,
+      isAdmin: user && user.isAdmin,
       headers: {
-        token: user.token,
+        token: user && user.token,
       },
     },
   });
@@ -66,7 +66,7 @@ const SinglePet = () => {
           <div className='flex relative md:flex-row flex-col my-14 gap-2 sm:gap-4 lg:gap-8'>
             {!loading && !error && (
               <>
-                { user.isAdmin &&
+                { (user && user.isAdmin) &&
                   <span
                     onClick={deletePetRequest}
                     className='absolute cursor-pointer right-6 top-0 font-medium text-xs text-stone-600 flex items-center flex-col'
