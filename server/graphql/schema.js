@@ -68,6 +68,17 @@ const RootQuery = new GraphQLObjectType({
         return Pet.findById(args.id);
       },
     },
+
+           //<-----GET PETS BY CATEGORY----->//
+
+
+    getPetByCategory: {
+      type: new GraphQLList(PetType),
+      args: { type: { type: GraphQLString } },
+      resolve(parent, args) {
+       return Pet.find({type:args.type});
+      },
+    },
   },
 });
 
@@ -155,6 +166,7 @@ const mutation = new GraphQLObjectType({
         address: { type: GraphQLString },
         postal: { type: GraphQLString },
         country: { type: GraphQLString },
+        city: { type: GraphQLString },
       },
       resolve(parent, args, context) {
         if (!context.req.isAuth)
@@ -178,14 +190,20 @@ const mutation = new GraphQLObjectType({
     addPet: {
       type: PetType,
       args: {
-        name: { type: GraphQLNonNull(GraphQLID) },
-        ownerId: { type: GraphQLNonNull(GraphQLID) },
-        age: { type: GraphQLNonNull(GraphQLInt) },
-        type: { type: GraphQLNonNull(GraphQLID) },
+        name: { type: GraphQLNonNull(GraphQLString) },
+        ownerId: { type:(GraphQLID) },
+        age: { type: GraphQLNonNull(GraphQLString) },
+        type: { type: GraphQLNonNull(GraphQLString) },
+        gender:{type: GraphQLNonNull(GraphQLString)},
+        breed:{type: GraphQLNonNull(GraphQLString)},
+        pictures:{type: (GraphQLList(PetPictureInputType))},
+        description:{type: GraphQLNonNull(GraphQLString)},
+        vaccinated:{type: GraphQLNonNull(GraphQLBoolean)},
+        litterTrained:{type: GraphQLNonNull(GraphQLBoolean)},
       },
       async resolve(parent, args, context) {
-        if (!context.req.isAuth)
-          throw new AuthenticationError('Login to add a pet.');
+        if (!context.req.isAdmin) {throw new AuthenticationError('Only admin can add a pet.')}
+        console.log(args)
         const pet = new Pet({
           ...args,
         });
@@ -202,8 +220,7 @@ const mutation = new GraphQLObjectType({
         id: { type: GraphQLNonNull(GraphQLID) },
       },
       resolve(parent, args, context) {
-        if (!context.req.isAuth)
-          throw new AuthenticationError('You can only delete your own pet.');
+        if (!context.req.isAdmin) {throw new AuthenticationError('Only an admin can delete a pet.')};
         return Pet.findByIdAndDelete(args.id);
       },
     },

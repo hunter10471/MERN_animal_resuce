@@ -22,9 +22,12 @@ export const LOGIN_USER = gql`
   ) {
     loginUser(password: $password, email: $email) {
       username
-      avatar
       email
+      address
+      postal
+      city
       token
+      avatar
       isAdmin
       _id
     }
@@ -43,6 +46,9 @@ export const GOOGLE_CONTINUE = gql`
     loginUserGoogle(password:$password, email:$email, googleId:$googleId, avatar:$avatar, username:$username){
       username
       email
+      address
+      postal
+      city
       token
       avatar
       isAdmin
@@ -50,4 +56,28 @@ export const GOOGLE_CONTINUE = gql`
     }
   }
 
+`;
+
+export const UPDATE_USER = gql`
+    mutation updateUser(
+    $id:ID!
+    $password: String
+    $email: String
+    $username:String
+    $address:String
+    $city:String
+    $postal:String
+  ) {
+    updateUser(id:$id,password: $password, email: $email, username:$username, postal:$postal, address:$address, city:$city) {
+      username
+      email
+      address
+      postal
+      city
+      token
+      avatar
+      isAdmin
+      _id
+    }
+  }
 `;

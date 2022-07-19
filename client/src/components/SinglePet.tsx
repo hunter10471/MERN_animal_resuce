@@ -14,12 +14,20 @@ interface ISinglePetProps {
   breed: string;
   gender: string;
   id: string;
-  variants: any;
+  variants?: any;
 }
 
 const SinglePet = (props: ISinglePetProps) => {
   return (
-    <motion.div variants={props.variants} >
+    <motion.div
+      initial={{ y: '20vh', opacity: 0 }}
+      animate={{ y: '0', opacity: 1 }}
+      transition={{
+        duration: 0.8,
+        type: 'anticipate',
+        
+      }}
+    >
       <Link to={`/pet/${props.id}`}>
         <div className='flex flex-col group transition-all duration-300 ease-in-out overflow-hidden cursor-pointer hover:scale-105 justify-end relative w-[150px] h-[200px] sm:w-[200px] sm:h-[250px] lg:w-[250px] lg:h-[300px] m-4 hover:shadow-2xl  shadow-xl rounded-xl'>
           <FavoriteBorderIcon

@@ -10,6 +10,7 @@ import SinglePet from './pages/SinglePet';
 import { useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import About from './pages/About';
+import User from './pages/User';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -31,6 +32,10 @@ function App() {
           <Route
             path='/register'
             element={user ? <Navigate to='/' replace /> : <Register />}
+          />
+          <Route
+            path='/user/:id'
+            element={!user ? <Navigate to='/register' replace /> : <User />}
           />
           <Route path='/pet/:id' element={<SinglePet />} />
           <Route path='/contact' element={<Contact/>} />

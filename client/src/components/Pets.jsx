@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cat from '../assets/images/cat.svg';
 import dog from '../assets/images/dog.svg';
 import animal from '../assets/images/animal.svg';
@@ -20,8 +20,9 @@ const headingVariant = {
 };
 
 const Pets = () => {
+  const [category, setCategory] = useState();
   return (
-    <div className='relative text-secondary flex justify-center flex-col items-center mt-[20vh] p-5'>
+    <div id='pets' className='relative text-secondary flex justify-center flex-col items-center mt-[20vh] p-5'>
       <motion.div
         variants={headingVariant}
         initial='hidden'
@@ -46,26 +47,26 @@ const Pets = () => {
         alt='blob'
       />
       <div className='flex flex-wrap justify-center gap-6 [&>*:hover]:opacity-80 [&>*]:cursor-pointer [&>*]:bg-white  [&>*]:transition-all my-6'>
-        <div className='shadow-lg border-2 py-2 px-6 md:w-fit w-full max-w-[300px] justify-center gap-3 flex items-center rounded-xl'>
+        <div onClick={()=>setCategory('cat')} className='shadow-lg border-2 py-2 px-6 md:w-fit w-full max-w-[300px] justify-center gap-3 flex items-center rounded-xl'>
           <img className='w-[25px] md:w-[40px]' src={cat} alt='cat' />
           <h3 className='font-bold text-blue-500 md:text-base text-sm'>
             Search Cats
           </h3>
         </div>
-        <div className='shadow-lg py-2 px-6 md:w-fit w-full max-w-[300px] justify-center border-2 gap-3 flex items-center rounded-xl '>
+        <div onClick={()=>setCategory('dog')}  className='shadow-lg py-2 px-6 md:w-fit w-full max-w-[300px] justify-center border-2 gap-3 flex items-center rounded-xl '>
           <img className='w-[25px] md:w-[40px]' src={dog} alt='dog' />
           <h3 className='font-bold text-blue-500 md:text-base text-sm'>
             Search Dogs
           </h3>
         </div>
-        <div className='shadow-lg py-2 px-6 md:w-fit w-full max-w-[300px] justify-center border-2 gap-3 flex items-center rounded-xl '>
+        <div onClick={()=>setCategory()}  className='shadow-lg py-2 px-6 md:w-fit w-full max-w-[300px] justify-center border-2 gap-3 flex items-center rounded-xl '>
           <img className='w-[25px] md:w-[40px]' src={animal} alt='animal' />
           <h3 className='font-bold text-blue-500 md:text-base text-sm'>
-            Search Other Animals
+            Search All Animals
           </h3>
         </div>
       </div>
-      <PetsContainer />
+      <PetsContainer type={category} />
     </div>
   );
 };

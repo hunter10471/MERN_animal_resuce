@@ -33,7 +33,6 @@ const verifyToken = (req,res,next) =>{
             next();
         }
     }else{
-        logger.error('Unauthenticated action.');
         req.isAuth = false;
         next();
     }
@@ -43,7 +42,7 @@ const verifyToken = (req,res,next) =>{
 const verifyTokenAndAuth = (req,res,next) =>{
     verifyToken(req,res,()=>{
         if(req.isAuth){
-            if(req.user._id === req.query.id || req.user.isAdmin ){
+            if(req.user._id === req.headers.id || req.user.isAdmin ){
                 if(req.user.isAdmin) req.isAdmin = true;
                 else req.isAdmin = false;
                 req.isAuth = true;
@@ -54,7 +53,6 @@ const verifyTokenAndAuth = (req,res,next) =>{
             }
         }
         else{
-           logger.error('There was an error authenticating this action.');
            req.isAuth = false;
            next();
         };

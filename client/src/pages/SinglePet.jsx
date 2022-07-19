@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -7,23 +7,51 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_PET } from '../queries/pet';
 import Loader from '../components/Loader';
+import noPet from '../assets/images/noPicturePet.png';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { DELETE_PET } from '../mutations/petMutations';
+import { useSelector } from 'react-redux';
 
 const SinglePet = () => {
   const [picture, setPicture] = useState(0);
   const id = useLocation().pathname.split('/')[2];
+  const user = useSelector((state) => state.currentUser);
+  const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_PET, { variables: { id } });
+  const [deletePet] = useMutation(DELETE_PET, {
+    variables: {
+      id,
+    },
+    context: {
+      isAdmin: user.isAdmin,
+      headers:{
+        token:user.token
+      }
+    },
+  });
 
   useEffect(() => {
     scroll(0, 0);
   }, [loading]);
 
+  const deletePetRequest = async () => {
+    try {
+      const res = await deletePet();
+      if (res.errors) throw new Error('Pet cannot be added at the moment.');
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+    
+  };
+
   return (
     <div className='flex justify-center text-secondary'>
-      <div className='p-3 sm:p-4 lg:p-6 max-w-screen-2xl w-full'>
-        <div className='flex justify-center lg:justify-between items-center rounded-xl mb-10'>
+      <div className=' p-3 sm:p-4 lg:p-6 max-w-screen-2xl w-full'>
+        <div className=' flex justify-center lg:justify-between items-center rounded-xl mb-10'>
           <Logo />
           <Navbar classes='lg:block hidden' dark={true} />
         </div>
@@ -36,26 +64,40 @@ const SinglePet = () => {
         {loading ? (
           <Loader />
         ) : (
-          <div className='flex md:flex-row flex-col my-14 gap-2 sm:gap-4 lg:gap-8'>
+          <div className='flex relative md:flex-row flex-col my-14 gap-2 sm:gap-4 lg:gap-8'>
             {!loading && !error && (
               <>
+                {<span onClick={deletePetRequest} className='absolute cursor-pointer right-6 top-0 font-medium text-xs text-stone-600 flex items-center flex-col'>
+                  <DeleteIcon
+                    sx={{ fontSize: 38 }}
+                    titleAccess='Delete Pet'
+                    className='text-primary hover:scale-110'
+              
+                  />
+                  Delete pet
+                </span>}
                 <div className='flex flex-col-reverse gap-2 items-center w-full md:w-6/12'>
                   <div className='flex gap-2'>
-                    {data.getPet.pictures.map((el, index) => {
-                      return (
-                        <img
-                          onClick={() => setPicture(index)}
-                          className='h-[80px] w-[80px] md:w-[120px] md:h-[120px] object-cover object-center my-4 rounded-xl cursor-pointer hover:opacity-80'
-                          key={index}
-                          src={el.url}
-                          alt='pet'
-                        />
-                      );
-                    })}
+                    {data.getPet.pictures[0] &&
+                      data.getPet.pictures.map((el, index) => {
+                        return (
+                          <img
+                            onClick={() => setPicture(index)}
+                            className='h-[80px] w-[80px] md:w-[120px] md:h-[120px] object-cover object-center my-4 rounded-xl cursor-pointer hover:opacity-80'
+                            key={index}
+                            src={el.url}
+                            alt='pet'
+                          />
+                        );
+                      })}
                   </div>
                   <img
                     className='rounded-xl w-[200px] h-[300px] sm:h-[450px] sm:w-[350px] lg:h-[600px] lg:w-[500px] object-cover object-center'
-                    src={data.getPet.pictures[picture].url}
+                    src={
+                      (data.getPet.pictures[0] &&
+                        data.getPet.pictures[picture].url) ||
+                      noPet
+                    }
                     alt='pet'
                   />
                 </div>

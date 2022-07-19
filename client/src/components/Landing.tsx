@@ -11,6 +11,11 @@ import { logout } from '../redux/apiCalls';
 import { Link } from 'react-router-dom';
 import blob from '../assets/images/blob.svg';
 
+
+const goToPets = () =>{
+  document.getElementById('pets').scrollIntoView();
+};
+
 const Landing = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.currentUser);
@@ -46,7 +51,7 @@ const Landing = () => {
           {user ? (
             <div className='flex items-center gap-5 [&>*:hover]:opacity-60 [&>*]:cursor-pointer'>
               {' '}
-              <PersonOutlineIcon fontSize='inherit' />
+              <Link to={`/user/${user._id}`} ><PersonOutlineIcon fontSize='inherit' /></Link>
               <Button
                 onClick={handleLogout}
                 classes='w-fit'
@@ -84,7 +89,7 @@ const Landing = () => {
           <h2 className='text-2xl sm:text-3xl lg:text-4xl w-[70%] self-start font-extrabold my-6 font-heading'>
             I&apos;m looking for a nice cozy place to call home.
           </h2>
-          <Button classes='max-w-[200px]' theme='filled' text='Adopt Me' />
+          <Button onClick={goToPets} classes='max-w-[200px]' theme='filled' text='Adopt Me' />
         </div>
       </div>
     </div>

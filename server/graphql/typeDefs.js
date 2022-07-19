@@ -36,6 +36,9 @@ const Pet = require('../models/Pet');
       country: {
        type: GraphQLString,
       },
+      city: {
+       type: GraphQLString,
+      },
       postal: {
        type: GraphQLString,
       },
@@ -115,7 +118,7 @@ const Pet = require('../models/Pet');
       vaccinated: {
         type: GraphQLBoolean
       },
-      owner: {
+      ownerId: {
         type: UserType,
         resolve(parent, args) {
           return User.findById(parent.ownerId);
