@@ -27,9 +27,9 @@ const SinglePet = () => {
     },
     context: {
       isAdmin: user.isAdmin,
-      headers:{
-        token:user.token
-      }
+      headers: {
+        token: user.token,
+      },
     },
   });
 
@@ -45,7 +45,6 @@ const SinglePet = () => {
     } catch (error) {
       console.log(error);
     }
-    
   };
 
   return (
@@ -67,15 +66,19 @@ const SinglePet = () => {
           <div className='flex relative md:flex-row flex-col my-14 gap-2 sm:gap-4 lg:gap-8'>
             {!loading && !error && (
               <>
-                {<span onClick={deletePetRequest} className='absolute cursor-pointer right-6 top-0 font-medium text-xs text-stone-600 flex items-center flex-col'>
-                  <DeleteIcon
-                    sx={{ fontSize: 38 }}
-                    titleAccess='Delete Pet'
-                    className='text-primary hover:scale-110'
-              
-                  />
-                  Delete pet
-                </span>}
+                { user.isAdmin &&
+                  <span
+                    onClick={deletePetRequest}
+                    className='absolute cursor-pointer right-6 top-0 font-medium text-xs text-stone-600 flex items-center flex-col'
+                  >
+                    <DeleteIcon
+                      sx={{ fontSize: 38 }}
+                      titleAccess='Delete Pet'
+                      className='text-primary hover:scale-110'
+                    />
+                    Delete pet
+                  </span>
+                }
                 <div className='flex flex-col-reverse gap-2 items-center w-full md:w-6/12'>
                   <div className='flex gap-2'>
                     {data.getPet.pictures[0] &&
@@ -154,7 +157,9 @@ const SinglePet = () => {
                         </span>
                       </span>
                     </div>
-                    <Button classes='mt-6' text='Adopt Me' theme='filled' />
+                    <Link to='/contact'>
+                      <Button classes='mt-6' text='Adopt Me' theme='filled' />
+                    </Link>
                   </div>
                 </div>
               </>

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-require('dotenv').config();
+require('dotenv').config({path:__dirname+'/.env'});
 const { graphqlHTTP } = require('express-graphql');
 const connectDB = require('./config/db');
 const schema = require('./graphql/schema');
