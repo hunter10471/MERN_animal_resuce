@@ -67,8 +67,9 @@ export const UPDATE_USER = gql`
     $address:String
     $city:String
     $postal:String
+    $avatar:String
   ) {
-    updateUser(id:$id,password: $password, email: $email, username:$username, postal:$postal, address:$address, city:$city) {
+    updateUser(id:$id,password: $password,avatar:$avatar, email: $email, username:$username, postal:$postal, address:$address, city:$city) {
       username
       email
       address
@@ -80,4 +81,14 @@ export const UPDATE_USER = gql`
       _id
     }
   }
+`;
+
+
+export const SUBSCRIBE_USER = gql`
+  mutation subscribeUser($email:String!){
+    subscribeUser(email:$email){
+      email
+    }
+  }
+
 `;

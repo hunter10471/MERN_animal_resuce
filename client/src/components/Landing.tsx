@@ -9,6 +9,7 @@ import Logo from './Logo';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/apiCalls';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import blob from '../assets/images/blob.svg';
 
 
@@ -26,10 +27,11 @@ const Landing = () => {
     <div className='flex w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
       <div className=' flex flex-col items-center justify-between  w-full h-full min-h-screen relative lg:w-7/12 xl:w-9/12 bg-primary bg-landingImg bg-center '>
         <Navbar />
-        <span className='absolute top-2 lg:top-4  right-[calc(50%_-_32px)]  md:right-[-100px]  rounded-[50%] bg-white/40'>
+        <span className='absolute top-6  right-[calc(50%_-_32px)]  md:right-[-100px]  rounded-[50%] bg-white/40'>
           <Logo />
         </span>
         <Icons classes='text-white flex-col absolute bottom-4 right-4 bg-black/20' />
+        <motion.h1 initial={{scale:0 ,opacity:0,rotate:15}} animate={{scale:1 ,opacity:1,rotate:[-5,5,-5,5,-5]}} transition={{duration:2.5,type:'spring',stiffness:200,delay:0.5 }}   className='font-central relative cursor-default  before:absolute before:w-full before:left-0 before:bg-gradient-to-l before:from-secondary before:h-[4px] before:rounded-xl before:bottom-[-12px] text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap rotate-[-5deg]'>Welcome to Bayzuban!</motion.h1>
         <img
           className='object-scale-down min-w-fit h-[60vh] sm:h-[65vh] lg:h-[70vh]'
           src={dogImg}

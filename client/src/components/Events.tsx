@@ -58,7 +58,7 @@ const Events = () => {
       initial='hidden'
       whileInView='visible'
       viewport={{ once: true }}
-      className='relative flex-wrap  text-secondary mt-[20vh] p-5 flex items-center justify-center gap-10 sm:gap-20 lg:gap-32'
+      className='relative flex-wrap  text-secondary sm:mt-[5vh] lg:mt-[20vh] p-5 flex items-center justify-center gap-10 sm:gap-20 lg:gap-32'
     >
       <div>
         <motion.div variants={headingVariant} viewport={{once:true}} >

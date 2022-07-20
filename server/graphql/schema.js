@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Pet = require('../models/Pet');
+const { mailer } = require('../utils/mailer');
 
 const {
   GraphQLObjectType,
@@ -21,6 +22,7 @@ const {
 
 const { loginUser, registerUser, googleContinue } = require('./resolvers/user');
 const { AuthenticationError } = require('apollo-server');
+const logger = require('../utils/logger');
 
 //Queries
 
@@ -116,6 +118,23 @@ const mutation = new GraphQLObjectType({
       },
     },
 
+    //<----SUBSCRIBE-USER---->//
+
+    subscribeUser: {
+      type: UserType,
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args) {
+        try {
+          mailer(args.email);
+          return 'Mail sent.';
+        } catch (error) {
+          logger.error(error);
+        }
+      },
+    },
+
 
         //<----LOGIN/REGISTER WITH GOOGLE---->//
         loginUserGoogle: {
@@ -202,7 +221,7 @@ const mutation = new GraphQLObjectType({
         litterTrained:{type: GraphQLNonNull(GraphQLBoolean)},
       },
       async resolve(parent, args, context) {
-        if (!context.req.isAdmin) {throw new AuthenticationError('Only admin can add a pet.')}
+        if (context.req.isAdmin) {throw new AuthenticationError('Only admin can add a pet.')}
         console.log(args)
         const pet = new Pet({
           ...args,
@@ -220,7 +239,7 @@ const mutation = new GraphQLObjectType({
         id: { type: GraphQLNonNull(GraphQLID) },
       },
       resolve(parent, args, context) {
-        if (!context.req.isAdmin) {throw new AuthenticationError('Only an admin can delete a pet.')};
+        if (context.req.isAdmin) {throw new AuthenticationError('Only an admin can delete a pet.')};
         return Pet.findByIdAndDelete(args.id);
       },
     },

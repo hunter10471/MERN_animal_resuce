@@ -11,8 +11,9 @@ export const ADD_PET = gql`
     $litterTrained:Boolean!
     $breed:String!
     $gender:String!
+    $pictures:[InputPicture]
   ) {
-    addPet(name: $name, age: $age, type:$type, description:$description,vaccinated:$vaccinated, litterTrained:$litterTrained, breed:$breed, gender:$gender) {
+    addPet(name: $name, age: $age, type:$type, description:$description,vaccinated:$vaccinated,pictures:$pictures, litterTrained:$litterTrained, breed:$breed, gender:$gender) {
       name
       type
     }

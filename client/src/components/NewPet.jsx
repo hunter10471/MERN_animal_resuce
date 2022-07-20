@@ -4,6 +4,9 @@ import { ADD_PET } from '../mutations/petMutations';
 import { Alert } from '@mui/material';
 import Button from './Button';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import blob from '../assets/images/blob.svg';
+
 
 const NewPet = () => {
   const [name, setName] = useState('');
@@ -17,7 +20,8 @@ const NewPet = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [failureModal, setFailureModal] = useState(false);
   const user = useSelector((state) => state.currentUser);
-  
+  const pictures = [];
+
   const [addPet] = useMutation(ADD_PET, {
     variables: {
       name,
@@ -28,14 +32,29 @@ const NewPet = () => {
       type,
       gender,
       breed,
+      pictures,
     },
     context: {
       isAdmin: user.isAdmin,
-      headers:{
-        token:user.token
-      }
+      headers: {
+        token: user.token,
+      },
     },
   });
+
+  const addImg = async (e) => {
+    let formData = new FormData();
+    formData.append('file', e);
+    formData.append('upload_preset', 'animal_rescue');
+    const res = await axios.post(
+      'https://api.cloudinary.com/v1_1/dz79wze9e/image/upload',
+      formData
+    );
+    console.log(res);
+    pictures.push({ url: res.data.url });
+  };
+
+
 
   const addPetRequest = async (e) => {
     try {
@@ -49,11 +68,10 @@ const NewPet = () => {
       setTimeout(() => setFailureModal(false), 10000);
       console.log(error);
     }
-    
   };
 
   return (
-    <div className='mt-20'>
+    <div className='mt-20 pt-20 border-t-2'>
       <h1 className='text-lg sm:text-xl lg:text-2xl font-heading font-bold text-stone-700 capitalize'>
         Add A New Pet
       </h1>
@@ -85,7 +103,7 @@ const NewPet = () => {
               </label>
               <input
                 required
-                placeholder='Type'
+                placeholder='cat/dog/tiger'
                 onChange={(e) => setType(e.target.value)}
                 className='placeholder:italic hover:bg-slate-100 border-2 rounded-lg  hover:border-blue-400 my-2 transition-all duration-200 text-sm md:text-base  px-2 sm:px-4 min-w-[200px] py-2 focus:outline-none focus:border-blue-400 ring-2 ring-transparent'
                 type='text'
@@ -109,7 +127,7 @@ const NewPet = () => {
               </label>
               <input
                 required
-                placeholder='Age'
+                placeholder='18 years old'
                 onChange={(e) => setAge(e.target.value)}
                 className='placeholder:italic hover:bg-slate-100 border-2 rounded-lg  hover:border-blue-400 my-2 transition-all duration-200 text-sm md:text-base  px-2 sm:px-4 min-w-[200px] py-2 focus:outline-none focus:border-blue-400 ring-2 ring-transparent'
                 type='text'
@@ -191,6 +209,29 @@ const NewPet = () => {
               />
             </div>
           </div>
+        </div>
+        <div className='flex flex-col w-full border-t-2 pt-2 mt-5'>
+          <label className='text-sm md:text-base font-medium text-stone-600 my-5'>
+            Pictures
+          </label>
+          <input
+            required
+            onChange={(e) => addImg(e.target.files[0])}
+            type='file'
+            className='my-2'
+          />
+          <input
+            required
+            onChange={(e) => addImg(e.target.files[0])}
+            type='file'
+            className='my-2'
+          />
+          <input
+            required
+            onChange={(e) => addImg(e.target.files[0])}
+            type='file'
+            className='my-2'
+          />
         </div>
         <Button text='Add Pet' theme='filled' classes='mt-10' />
       </form>

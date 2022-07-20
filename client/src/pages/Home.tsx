@@ -5,7 +5,6 @@ import Landing from '../components/Landing';
 import Pets from '../components/Pets';
 import Subscribe from '../components/Subscribe';
 import { motion, AnimatePresence } from 'framer-motion';
-import Loader from '../components/Loader';
 
 
 const Home = () => {
@@ -15,6 +14,7 @@ const Home = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, ease: 'linear' }}
       exit={{ opacity: 0 }}
+      className='overflow-x-hidden min-h-screen'
     >
       <AnimatePresence exitBeforeEnter >
         <Landing key={3} />

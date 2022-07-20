@@ -13,7 +13,7 @@ const Navbar = (props: INavProps) => {
   const [toggle, setToggle] = useState(false);
   return (
     <nav
-      className={`relative flex justify-center ${props.classes} text-white w-full z-[99] `}
+      className={`relative  flex justify-center ${props.classes} text-white w-full z-[99] `}
     >
       <button
         onClick={() => setToggle(!toggle)}
@@ -27,7 +27,7 @@ const Navbar = (props: INavProps) => {
         className={`flex flex-col items-center text-primary ${
           props.dark ? 'lg:text-black' : 'lg:text-white'
         } bg-white lg:bg-transparent lg:items-start  lg:flex-row justify-evenly gap-2 max-w-screen-xl transition-all duration-300 ease-in-out overflow-hidden ${
-          toggle ? 'h-[310px] px-6 pt-5 opacity-100' : 'h-[0px] opacity-0'
+          toggle ? 'h-[450px]  p-5 opacity-100' : 'h-[0px] opacity-0'
         } lg:opacity-100 lg:h-auto w-full lg:p-8`}
       >
         {navData.map((el, index) => {

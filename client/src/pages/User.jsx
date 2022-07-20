@@ -4,13 +4,17 @@ import { useSelector } from 'react-redux';
 import { Alert } from '@mui/material';
 import { motion } from 'framer-motion';
 
-import avatar from '../assets/images/avatar.png';
+import avatarImg from '../assets/images/avatar.png';
 import Button from '../components/Button';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useMutation } from '@apollo/client';
 import { UPDATE_USER } from '../mutations/userMutations';
 import { Link } from 'react-router-dom';
 import NewPet from '../components/NewPet';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import axios from 'axios';
+import blob from '../assets/images/blob.svg';
+
 
 const User = () => {
   const user = useSelector((state) => state.currentUser);
@@ -20,6 +24,7 @@ const User = () => {
   const [username, setUsername] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [successModal, setSuccessModal] = useState(false);
   const [failureModal, setFailureModal] = useState(false);
@@ -30,6 +35,7 @@ const User = () => {
   city !== '' && (updatedUserInfo.city = city);
   postalCode !== '' && (updatedUserInfo.postalCode = postalCode);
   address !== '' && (updatedUserInfo.address = address);
+  avatar !== '' && (updatedUserInfo.avatar = avatar);
 
   const [updateUser] = useMutation(UPDATE_USER, {
     variables: {
@@ -43,6 +49,16 @@ const User = () => {
       },
     },
   });
+
+  const updateAvatar = async (e) => {
+    let formData = new FormData();
+    formData.append('file', e);
+    formData.append('upload_preset', 'animal_rescue');
+    await axios.post(
+      'https://api.cloudinary.com/v1_1/dz79wze9e/image/upload',
+      formData
+    ).then((res)=>setAvatar(res.data.url));
+  };
 
   const updateInfo = async (e) => {
     try {
@@ -66,6 +82,16 @@ const User = () => {
         exit={{ opacity: 0, transition: { duration: 0.12, ease: 'easeIn' } }}
         className='w-fit mx-auto p-6 my-20 '
       >
+        <img
+          className='absolute opacity-20 z-[-1] w-[50vw] left-[-10vw] top-0'
+          src={blob}
+          alt='blob'
+        />
+        <img
+          className='absolute opacity-20 z-[-1] w-[50vw] right-[-10vw] bottom-[-100%]'
+          src={blob}
+          alt='blob'
+        />
         <Link className='absolute left-8 top-16' to='/'>
           <span className='flex gap-1 items-center text-blue-500 hover:underline '>
             {' '}
@@ -82,10 +108,26 @@ const User = () => {
           onSubmit={updateInfo}
           className='my-5 w-full mx-auto flex items-center flex-col'
         >
-          <div className='flex flex-col items-center my-4 rounded-[50%]'>
-            <img
-              src={user.avatar || avatar}
-              className='w-[100px] h-auto rounded-[50%] border-2 border-primary'
+          <div className='flex flex-col items-center my-4'>
+            <label
+              htmlFor='avatar'
+              className='relative object-cover cursor-pointer'
+            >
+              <img
+                src={user.avatar || avatarImg}
+                className='w-[100px] h-[100px] object-cover rounded-[50%] border-2 border-primary'
+                alt='avatar'
+              />
+              <AddCircleIcon
+                fontSize='small'
+                className='text-primary absolute bottom-1 right-0 bg-white rounded-[50%]'
+              />
+            </label>
+            <input
+              id='avatar'
+              onChange={(e) => updateAvatar(e.target.files[0])}
+              className='hidden'
+              type='file'
               alt='avatar'
             />
           </div>

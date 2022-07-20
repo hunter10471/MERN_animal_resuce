@@ -50,7 +50,7 @@ const SinglePet = () => {
   return (
     <div className='flex justify-center text-secondary'>
       <div className=' p-3 sm:p-4 lg:p-6 max-w-screen-2xl w-full'>
-        <div className=' flex justify-center lg:justify-between items-center rounded-xl mb-10'>
+        <div className=' flex justify-center relative lg:justify-between items-center rounded-xl mb-10'>
           <Logo />
           <Navbar classes='lg:block hidden' dark={true} />
         </div>
@@ -115,7 +115,7 @@ const SinglePet = () => {
                     <h2 className='font-medium text-xs sm:text-sm lg:text-base my-4 sm:my-6 self-start'>
                       About {data.getPet.name}:
                     </h2>
-                    <div className='flex items-center gap-4 p-4 border-[1px] border-primary rounded-xl my-2 md:my-4'>
+                    <div className='flex items-center w-full max-w-[450px] gap-4 p-4 border-[1px] border-primary rounded-xl my-2 md:my-4'>
                       <span className='p-1 sm:p-2 rounded-xl bg-primary/20 text-primary'>
                         <PetsIcon />
                       </span>
@@ -128,7 +128,7 @@ const SinglePet = () => {
                         </span>
                       </span>
                     </div>
-                    <div className='flex items-center gap-4 p-4 border-[1px] hover:border-primary rounded-xl my-2 md:my-4'>
+                    <div className='flex items-center w-full max-w-[450px] gap-4 p-4 border-[1px] hover:border-primary rounded-xl my-2 md:my-4'>
                       <span className='p-1 sm:p-2 rounded-xl bg-primary/20 text-primary'>
                         <InboxIcon />
                       </span>
@@ -142,7 +142,7 @@ const SinglePet = () => {
                         </span>
                       </span>
                     </div>
-                    <div className='flex items-center gap-4 p-4 border-[1px] hover:border-primary rounded-xl my-2 md:my-4'>
+                    <div className='flex items-center w-full max-w-[450px] gap-4 p-4  border-[1px] hover:border-primary rounded-xl my-2 md:my-4'>
                       <span className='p-1 sm:p-2 rounded-xl bg-primary/20 text-primary'>
                         <VaccinesIcon />
                       </span>
@@ -152,7 +152,7 @@ const SinglePet = () => {
                         </h3>
                         <span className='text-stone-600 text-xs sm:text-sm lg:text-base'>
                           {data.getPet.name}{' '}
-                          {data.getPet.vaccinated ? 'has' : 'doesn&apos;t has'}{' '}
+                          {data.getPet.vaccinated ? 'has' : 'does not have'}{' '}
                           complete vaccinations done.
                         </span>
                       </span>
