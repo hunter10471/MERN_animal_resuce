@@ -5,7 +5,6 @@ import { Alert } from '@mui/material';
 import Button from './Button';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import blob from '../assets/images/blob.svg';
 
 
 const NewPet = () => {
