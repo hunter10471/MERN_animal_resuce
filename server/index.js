@@ -42,6 +42,7 @@ app.use(
   graphqlHTTP((req, res, graphQLParams) => ({
     schema: schema,
     context: { req, res },
+    
   }))
 );
 
