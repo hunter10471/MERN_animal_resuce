@@ -14,7 +14,6 @@ const Home = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, ease: 'linear' }}
       exit={{ opacity: 0 }}
-      className='overflow-x-hidden'
     >
       <AnimatePresence exitBeforeEnter >
         <Landing key={3} />
