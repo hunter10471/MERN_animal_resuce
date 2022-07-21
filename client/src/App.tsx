@@ -13,7 +13,7 @@ import About from './pages/About';
 import User from './pages/User';
 
 const client = new ApolloClient({
-  uri: 'http://bayzuban.herokuapp.com/',
+  uri: 'https://bayzuban.herokuapp.com/',
   cache: new InMemoryCache(),
 });
 
