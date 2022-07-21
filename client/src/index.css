@@ -10,6 +10,7 @@
   scroll-margin: 120px;
   -webkit-tap-highlight-color: transparent;
 
+
 }
 
 body {
@@ -24,4 +25,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+html,body,#root{
+  overflow-x: hidden;
 }
