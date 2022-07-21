@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Button from '../components/Button';
-import googleIcon from '../assets/images/googleIcon.png';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../components/Logo';
 import Icons from '../components/Icons';
@@ -13,7 +12,7 @@ import { useMutation } from '@apollo/client';
 import jwtDecode from 'jwt-decode';
 import { login } from '../redux/apiCalls';
 import { useDispatch } from 'react-redux';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const Register = () => {
   const [visible, setVisible] = useState(false);

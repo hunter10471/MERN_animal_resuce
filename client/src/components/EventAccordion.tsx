@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import panda from '../assets/images/panda.jpg';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
