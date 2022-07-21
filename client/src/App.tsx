@@ -13,7 +13,7 @@ import About from './pages/About';
 import User from './pages/User';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'http://bayzuban.herokuapp.com/',
   cache: new InMemoryCache(),
 });
 
