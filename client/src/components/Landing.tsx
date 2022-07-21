@@ -31,7 +31,7 @@ const Landing = () => {
           <Logo />
         </span>
         <Icons classes='text-white flex-col absolute bottom-4 right-4 bg-black/20' />
-        <motion.h1 initial={{scale:0 ,opacity:0,rotate:15}} animate={{scale:1 ,opacity:1,rotate:[-5,5,-5,5,-5]}} transition={{duration:2.5,type:'spring',stiffness:200,delay:0.5 }}   className='font-central relative cursor-default  before:absolute before:w-full before:left-0 before:bg-gradient-to-l before:from-secondary before:h-[4px] before:rounded-xl before:bottom-[-12px] text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap rotate-[-5deg]'>Welcome to Bayzuban!</motion.h1>
+        <motion.h1 data-testid='landing-heading' initial={{scale:0 ,opacity:0,rotate:15}} animate={{scale:1 ,opacity:1,rotate:[-5,5,-5,5,-5]}} transition={{duration:2.5,type:'spring',stiffness:200,delay:0.5 }}   className='font-central relative cursor-default  before:absolute before:w-full before:left-0 before:bg-gradient-to-l before:from-secondary before:h-[4px] before:rounded-xl before:bottom-[-12px] text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap rotate-[-5deg]'>Welcome to Bayzuban!</motion.h1>
         <img
           className='object-scale-down min-w-fit h-[60vh] sm:h-[65vh] lg:h-[70vh]'
           src={dogImg}

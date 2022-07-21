@@ -2,8 +2,9 @@ import React from 'react';
 import { expect, render } from '@testing-library/react';
 import Login from '../pages/Login';
 
+/* eslint-disable */
 
-test('Login render Page', () => { //eslint-disable-line
+test('Login render Page', () => {
 
   'renders the Login page',
   () => {
@@ -12,14 +13,14 @@ test('Login render Page', () => { //eslint-disable-line
   };
 });
 
-test('render 2 input components', () => { //eslint-disable-line
+test('render 2 input components', () => {
 
   const { getByPlaceholderText } = render(<Login />);
   expect(getByPlaceholderText(/email/i)).toBeInTheDocument();
   expect(getByPlaceholderText(/password/i)).toBeInTheDocument();
 });
 
-test('renders a submit button', () => { //eslint-disable-line
+test('renders a submit button', () => {
 
   const { getByText } = render(<Login />);
   expect(getByText('Log in')).toBeInTheDocument();
