@@ -12,10 +12,9 @@ import { AnimatePresence } from 'framer-motion';
 import About from './pages/About';
 import User from './pages/User';
 
-const PORT = process.env.PORT || 4000;
 
 const client = new ApolloClient({
-  uri: `http://localhost:${PORT}/graphql`,
+  uri: '/graphql',
   cache: new InMemoryCache(),
 });
 
