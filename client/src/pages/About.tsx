@@ -19,7 +19,7 @@ const About = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, ease: 'linear' }}
       exit={{ opacity: 0 }}
-      className='text-secondary flex flex-col items-center overflow-hidden '
+      className='text-secondary flex flex-col items-center '
     >
       <div className=' bg-aboutImg bg-cover bg-center min-h-[60vh] w-full'>
         <div className='w-full min-h-[60vh] flex items-center bg-primary/20'>

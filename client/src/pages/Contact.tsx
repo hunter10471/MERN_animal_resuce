@@ -89,7 +89,7 @@ const Contact = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, ease: 'linear' }}
       exit={{ opacity: 0 }}
-      className='flex flex-wrap mt-20 overflow-x-hidden md:mt-0 justify-center items-center md:items-stretch flex-col-reverse w-full md:flex-row text-secondary min-h-screen'
+      className='flex flex-wrap mt-20 md:mt-0 justify-center items-center md:items-stretch flex-col-reverse w-full md:flex-row text-secondary min-h-screen'
     >
       <LeftContainer />
       <MiddleContainer />
