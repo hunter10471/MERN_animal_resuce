@@ -12,8 +12,10 @@ import { AnimatePresence } from 'framer-motion';
 import About from './pages/About';
 import User from './pages/User';
 
+const PORT = process.env.PORT || 4000;
+
 const client = new ApolloClient({
-  uri: 'https://bayzuban.herokuapp.com/graphql',
+  uri: `http://localhost:${PORT}/graphql`,
   cache: new InMemoryCache(),
 });
 
