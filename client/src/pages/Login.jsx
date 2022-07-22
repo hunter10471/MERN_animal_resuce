@@ -101,7 +101,7 @@ const Login = () => {
   }, []);
 
   return (
-    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.2,ease:'linear'}} exit={{opacity:0}}className='flex flex-row-reverse w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
+    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.2,ease:'linear'}} exit={{opacity:0}} className='flex flex-row-reverse w-full h-full justify-center text-secondary flex-wrap md:flex-nowrap'>
       <div className='w-full lg:w-7/12 xl:w-9/12 bg-loginImg bg-cover bg-center'>
         <div className='flex flex-col justify-center relative w-full h-screen bg-primary/70'>
           <h1 className='lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-extrabold font-heading text-white mx-4 px-2 md:mx-6 my-2 max-w-[700px] '>

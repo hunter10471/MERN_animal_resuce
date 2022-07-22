@@ -12,7 +12,7 @@ const Home = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.2, ease: 'linear' }}
+      transition={{ duration: 0.2, ease: 'linear', when:'beforeChildren' }}
       exit={{ opacity: 0 }}
     >
       <AnimatePresence exitBeforeEnter >
