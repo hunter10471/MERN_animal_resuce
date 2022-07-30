@@ -54,7 +54,7 @@ GOOGLE_SECRET = <Your google private key found on developers console>
 ![](https://github.com/hunter10471/MERN_animal_resuce/blob/master/screenshots/ss2.png?raw=true)
 
 ### Pet page
-![](https://github.com/hunter10471/MERN_animal_rescue/blob/master/screenshots/ss3.png?raw=true)
+![](https://raw.githubusercontent.com/hunter10471/MERN_animal_resuce/master/screenshots/ss3.png)
 
 ## :key: Client Dependencies
 
