@@ -48,13 +48,13 @@ GOOGLE_SECRET = <Your google private key found on developers console>
 ## :camera: Screenshots
 
 ### Landing page
-![](https://github.com/hunter10471/MERN_animal_rescue/blob/master/screenshots/ss1.png)
+![](https://github.com/hunter10471/MERN_animal_resuce/blob/master/screenshots/ss1.png?raw=true)
 
 ### Login Page
-![](https://github.com/hunter10471/MERN_animal_rescue/blob/master/screenshots/ss2.png)
+![](https://github.com/hunter10471/MERN_animal_resuce/blob/master/screenshots/ss2.png?raw=true)
 
 ### Pet page
-![](https://github.com/hunter10471/MERN_animal_rescue/blob/master/screenshots/ss3.png)
+![](https://github.com/hunter10471/MERN_animal_rescue/blob/master/screenshots/ss3.png?raw=true)
 
 ## :key: Client Dependencies
 
@@ -128,7 +128,7 @@ GOOGLE_SECRET = <Your google private key found on developers console>
 
 
 
-## 🏗️ How to Set up `Cart-it` for Development
+## 🏗️ How to Set up `Bayzuban` for Development
 
 1. Clone the repository
 
